@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 
 //Click To logout
-    $('#fb_signout').click(function () {
+    $('.fb_signout').click(function () {
         FB.logout(function (response) {
             $.ajax({
                 url: 'fbstatus.php',
@@ -142,66 +142,80 @@ $(document).ready(function () {
     $('.searchUsers').click(function () {
 
         var whichuser = $('.whichuser');
-        if (whichuser.val().trim() != '')
+        if (whichuser.val().trim() != '' && whichuser.val().length>4)
         {
             if (userid != '')
             {
-                $('.fb_user_loader').addClass('active')
-                $srcs = FB.api('search?type=user&q=div&limit=500');
-                FB.api('search?type=user&q=divy&limit=500', function (response) {
-                    console.log(response)
-                    // console.log(response.data.length)
-                    if (response.data.length > 0)
-                    {
-
-                        for (var i = 0; i < response.data.length; i++)
+                $.ajax({
+                    type: 'POST',
+                    beforeSend: function (xhr) {
+                        $('.fb_user_loader').addClass('active');
+                    },
+                    url: "fbuser.php",
+                    data: {'username': whichuser.val().trim()},
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        if (data.length > 0)
                         {
-                            console.log(response.data[i]);
-                            $('.fb_user_list').append('<div>' +
-                                    ' <img src="http://graph.facebook.com/' + response.data[i].id + '/picture">' +
-                                    '<span class="user">' + response.data[i].name + '</span>' +
-                                    '</div>');
+                            $('.fb_user_loader').addClass('active');
+
+                            for (var i = 0; i < data.length; i++)
+                            {
+                                console.log(data[i]);
+                                $('.fb_user_list').append('<div>' +
+                                        ' <img src="http://graph.facebook.com/' + data[i].id + '/picture">' +
+                                        '<span class="user">' + data[i].name + '</span>' +
+                                        '</div>');
+                            }
+                            $('.fb_user_loader').removeClass('active');
                         }
-                        $('.fb_user_loader').removeClass('active');
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $('.fb_user_loader').removeClass('active')
                     }
-
-
-
-                });
+                })
+              
             }
-            $.ajax({
-                type: 'POST',
-                beforeSend: function (xhr) {
-                    $('.tweet_user_loader').addClass('active');
-                },
-                url: "getTweetUser.php",
-                data: {'username': whichuser.val().trim()},
-                dataType: 'json',
-                success: function (data, textStatus, jqXHR) {
-                    if (data.length > 0)
-                    {
-                        $('.tweet_user_loader').addClass('active');
+            else
+            {
 
-                        for (var i = 0; i < data.length; i++)
-                        {
-                            console.log(data[i]);
-                            $('.tweet_user_list').append('<div>' +
-                                    ' <img src=' + data[i].profile_image_url + '>' +
-                                    '<span class="user">' + data[i].name + '</span>' +
-                                    '</div>');
-                        }
-                        $('.fb_user_loader').removeClass('active');
-                    }
-                },
-                complete: function (jqXHR, textStatus) {
-                    $('.tweet_user_loader').removeClass('active')
-                }
-            })
+            }
+
 
 
         }
     });
+    function getTweetUser() {
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (xhr) {
+                $('.tweet_user_loader').addClass('active');
+            },
+            url: "getTweetUser.php",
+            data: {'username': whichuser.val().trim()},
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.length > 0)
+                {
+                    $('.tweet_user_loader').addClass('active');
 
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        console.log(data[i]);
+                        $('.tweet_user_list').append('<div>' +
+                                ' <img src=' + data[i].profile_image_url + '>' +
+                                '<span class="user">' + data[i].name + '</span>' +
+                                '</div>');
+                    }
+                    $('.fb_user_loader').removeClass('active');
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+                $('.tweet_user_loader').removeClass('active')
+            }
+        })
+    }
 
 });
 

@@ -98,8 +98,7 @@ if (!empty($_SESSION['access_token']) || !empty($_SESSION['access_token']['oauth
                             } else {
                                 ?>
                                 <button class="btn waves-effect waves-light  light-blue darken-4 btn_fb_login">
-                                    <div class="glyph-icon flaticon-facebook31 "> Connect with Facebook</div>
-                                </button>
+                                    <span class="glyph-icon flaticon-facebook31 "></span><span>Connect with Facebook</span></button>
                                 <?php
                             }
                             ?>
@@ -189,9 +188,9 @@ if (!empty($_SESSION['access_token']) || !empty($_SESSION['access_token']['oauth
             <div class="row">
                 <div class="col s12 m4">
                     <div class="icon-block">
-                        <div class="center light-blue-text">
-                            <div class="glyph-icon flaticon-facebook31 font-30  glyph"></div>
-                        </div>
+                        <h2 class="center light-blue-text">
+                            <img src="Icons/72/Facebook.png">
+                        </h2>
                         <h5 class="center">Facebook user List</h5>
 
                         <div class="light center">
@@ -216,7 +215,7 @@ if (!empty($_SESSION['access_token']) || !empty($_SESSION['access_token']['oauth
 
                 <div class="col s12 m4">
                     <div class="icon-block">
-                        <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+                        <h2 class="center light-blue-text"><img src="Icons/72/Twitter-2.png"></h2>
                         <h5 class="center">Twitter User List</h5>
 
                         <div class="light center">
@@ -240,10 +239,10 @@ if (!empty($_SESSION['access_token']) || !empty($_SESSION['access_token']['oauth
 
                 <div class="col s12 m4">
                     <div class="icon-block">
-                        <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-                        <h5 class="center">Easy to work with</h5>
+                        <h2 class="center light-blue-text"><img src="Icons/72/Linkedin.png"></h2>
+                        <h5 class="center">LinkedIn User List </h5>
 
-                        <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                        
                     </div>
                 </div>
             </div>
